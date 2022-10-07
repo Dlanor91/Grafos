@@ -1,5 +1,7 @@
 package grafo;
 
+import cola.Cola;
+import cola.ColaImp;
 import lista.*;
 
 public class Grafo {
@@ -152,4 +154,46 @@ public class Grafo {
 
     }
 
+    //visitando cuando desencolo puedo encolar elementos repetidos
+    //Pre: existeVertice(vert)
+    public void bfs(String vert){
+        boolean[] visitados = new boolean[tope];
+        int inicio = obtenerPos(vert);
+        Cola<Integer> cola = new ColaImp<>();
+        cola.encolar(inicio);
+        while(!cola.esVacia()){
+            //desencolar
+            //si no esta visitado
+            int pos = cola.desencolar();
+            if(!visitados[pos]){
+                visitados[pos] = true;
+                System.out.println(vertices[pos]);
+                for (int i = 0; i < tope; i++) {
+                    if (this.matAdyacentes[pos][i].isExiste() && !visitados[i]) {
+                        cola.encolar(i);
+                    }
+                }
+            }//si no esta visitado
+
+        }
+    }
+
+    //Marcando como visitado al encolar no encolo elementos repetidos
+    public void bfs2(String vert){
+        boolean[] visitados = new boolean[tope];
+        int inicio = obtenerPos(vert);
+        Cola<Integer> cola = new ColaImp<>();
+        cola.encolar(inicio);
+        visitados[inicio] = true;
+        while(!cola.esVacia()){
+            int pos = cola.desencolar();
+            System.out.println(vertices[pos]);
+            for (int i = 0; i < tope; i++) {
+                if (this.matAdyacentes[pos][i].isExiste() && !visitados[i]) {
+                    cola.encolar(i);
+                    visitados[i] = true;
+                }
+            }
+        }
+    }
 }
