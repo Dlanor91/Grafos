@@ -18,15 +18,15 @@ public class Grafo {
         this.vertices = new String[unTope];
         this.matAdyacentes = new Arista[unTope][unTope];
 
-        if(esDirigido){
-            for(int i = 0; i < this.tope; i++){
-                for (int j=0; j< this.tope; j++){
+        if (esDirigido) {
+            for (int i = 0; i < this.tope; i++) {
+                for (int j = 0; j < this.tope; j++) {
                     this.matAdyacentes[i][j] = new Arista(); //no se hace mas en otro lugar
                 }
             }
-        }else{
-            for(int i = 0; i < this.tope; i++){
-                for (int j=i; j< this.tope; j++){
+        } else {
+            for (int i = 0; i < this.tope; i++) {
+                for (int j = i; j < this.tope; j++) {
                     this.matAdyacentes[i][j] = new Arista();
                     this.matAdyacentes[j][i] = this.matAdyacentes[i][j];
 
@@ -45,8 +45,8 @@ public class Grafo {
 
     // PRE: !esLleno()
     private int obtenerPosLibre() {
-        for(int i =0; i < this.tope; i++){
-            if(this.vertices[i] == null){
+        for (int i = 0; i < this.tope; i++) {
+            if (this.vertices[i] == null) {
                 return i;
             }
         }
@@ -54,9 +54,11 @@ public class Grafo {
     }
 
     private int obtenerPos(String vert) {
-        for(int i =0; i < this.tope; i++){
-            if(this.vertices[i].equals(vert)){
-                return i;
+        for (int i = 0; i < this.tope; i++) {
+            if (this.vertices[i] != null) {
+                if (this.vertices[i].equals(vert)) {
+                    return i;
+                }
             }
         }
         return -1;
@@ -73,11 +75,11 @@ public class Grafo {
     public void borrarVertice(String vert) {
         Lista<String> retorno = new ListaImp<>();
         int pos = obtenerPos(vert);
-        this.vertices[pos] = null;
-        for(int k=0; k < tope ; k++){
+        for (int k = 0; k < tope; k++) {
             this.matAdyacentes[pos][k].setExiste(false);//aqui borro los adyacentes
             this.matAdyacentes[k][pos].setExiste(false);
         }
+        this.vertices[pos] = null;
         this.cantidad--;
     }
 
@@ -110,8 +112,8 @@ public class Grafo {
     public Lista<String> verticesAdyacentes(String vert) {
         Lista<String> retorno = new ListaImp<>();
         int pos = obtenerPos(vert);
-        for(int i=0; i < tope ; i++){
-            if(this.matAdyacentes[pos][i].isExiste()){
+        for (int i = 0; i < tope; i++) {
+            if (this.matAdyacentes[pos][i].isExiste()) {
                 retorno.insertar(vertices[i]);
             }
         }
@@ -122,8 +124,8 @@ public class Grafo {
     public Lista<String> verticesIncidentes(String vert) {
         Lista<String> retorno = new ListaImp<>();
         int pos = obtenerPos(vert);
-        for(int i=0; i < tope ; i++){
-            if(this.matAdyacentes[pos][i].isExiste()){
+        for (int i = 0; i < tope; i++) {
+            if (this.matAdyacentes[i][pos].isExiste()) {
                 retorno.insertar(vertices[i]);
             }
         }
@@ -131,24 +133,24 @@ public class Grafo {
     }
 
     //Pre: existeVertice(vert)
-    public void dfs(String vert){
+    public void dfs(String vert) {
         boolean[] visitados = new boolean[tope]; // Inicia todo en false
         Lista<String> retorno = new ListaImp<>();
         int pos = obtenerPos(vert);
-        dfsRec(pos,visitados);
+        dfsRec(pos, visitados);
 
     }
 
-    private void dfsRec(int pos, boolean[] visitados){
-      //Los pasos son
-      //1ero imprimir
-      //2do visitar
-      //3ero por cada adyacente  no visitado llamar recursivo
+    private void dfsRec(int pos, boolean[] visitados) {
+        //Los pasos son
+        //1ero imprimir
+        //2do visitar
+        //3ero por cada adyacente  no visitado llamar recursivo
         System.out.println(vertices[pos]);
-        visitados[pos]=true;
+        visitados[pos] = true;
         for (int i = 0; i < tope; i++) {
             if (this.matAdyacentes[pos][i].isExiste() && !visitados[i]) {
-                dfsRec(i,visitados);
+                dfsRec(i, visitados);
             }
         }
 
@@ -156,16 +158,16 @@ public class Grafo {
 
     //visitando cuando desencolo puedo encolar elementos repetidos
     //Pre: existeVertice(vert)
-    public void bfs(String vert){
+    public void bfs(String vert) {
         boolean[] visitados = new boolean[tope];
         int inicio = obtenerPos(vert);
         Cola<Integer> cola = new ColaImp<>();
         cola.encolar(inicio);
-        while(!cola.esVacia()){
+        while (!cola.esVacia()) {
             //desencolar
             //si no esta visitado
             int pos = cola.desencolar();
-            if(!visitados[pos]){
+            if (!visitados[pos]) {
                 visitados[pos] = true;
                 System.out.println(vertices[pos]);
                 for (int i = 0; i < tope; i++) {
@@ -179,13 +181,13 @@ public class Grafo {
     }
 
     //Marcando como visitado al encolar no encolo elementos repetidos
-    public void bfs2(String vert){
+    public void bfs2(String vert) {
         boolean[] visitados = new boolean[tope];
         int inicio = obtenerPos(vert);
         Cola<Integer> cola = new ColaImp<>();
         cola.encolar(inicio);
         visitados[inicio] = true;
-        while(!cola.esVacia()){
+        while (!cola.esVacia()) {
             int pos = cola.desencolar();
             System.out.println(vertices[pos]);
             for (int i = 0; i < tope; i++) {
