@@ -1,9 +1,12 @@
 package cola;
 
 public interface Cola<T> {
-    void encolar(T dato);
+    public boolean esVacia();
+    public void encolar(T dato);
 
     //Pre: !esVacia()
-    T desencolar();
-    boolean esVacia();
+   public T desencolar();
+
+
+
 }
