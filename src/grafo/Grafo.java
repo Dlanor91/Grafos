@@ -73,7 +73,6 @@ public class Grafo {
 
     // PRE: existeVertice
     public void borrarVertice(String vert) {
-        Lista<String> retorno = new ListaImp<>();
         int pos = obtenerPos(vert);
         for (int k = 0; k < tope; k++) {
             this.matAdyacentes[pos][k].setExiste(false);//aqui borro los adyacentes
@@ -135,7 +134,6 @@ public class Grafo {
     //Pre: existeVertice(vert)
     public void dfs(String vert) {
         boolean[] visitados = new boolean[tope]; // Inicia todo en false
-        Lista<String> retorno = new ListaImp<>();
         int pos = obtenerPos(vert);
         dfsRec(pos, visitados);
 
