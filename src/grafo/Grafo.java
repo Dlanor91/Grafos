@@ -196,4 +196,47 @@ public class Grafo {
             }
         }
     }
+
+    public int dijkstra(String VOrigen, String VDestino){
+        int posOrigen = obtenerPos(VOrigen);
+        int posDestino = obtenerPos(VDestino);
+
+        boolean[] visitados = new boolean[this.tope];
+        int[] costos = new int[this.tope];
+        String[] anterior = new String[this.tope];
+        for(int i = 0; i<tope; i++){
+            costos[i] = Integer.MAX_VALUE;
+            anterior[i] = "-";
+        }
+
+        for(int i = 0; i<tope; i++){
+            //Obtener el vertice no visitado de menor costo(si hay varios cualquiera)
+            int pos= obtenerSiguienteVerticeNoVisitadoDeMenorDistancia(costos,visitados);
+            //2 Visitarlo
+            visitados[pos] = true;
+            //3 Evaluar sitengo que actualizar el costo de los adyacentes NO VISITADOS
+            for(int j =0; j<tope;j++){
+                if(matAdyacentes[pos][j].isExiste() && !visitados[j]){
+                    int distanciaNueva = costos[pos] + matAdyacentes[pos][j].getPeso();
+                    if(distanciaNueva < costos[j])
+                    costos[j] = distanciaNueva;
+                    anterior[j] = vertices[pos];
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    private int obtenerSiguienteVerticeNoVisitadoDeMenorDistancia(int [] costos, boolean[] visitados){
+        int posMin = -1;
+        int min = Integer.MAX_VALUE;
+        for(int i = 0; i<tope; i++){
+            if(!visitados[i] && costos[i]< min){
+                min = costos[i];
+                posMin = i;
+            }
+        }
+        return posMin;
+    }
 }
