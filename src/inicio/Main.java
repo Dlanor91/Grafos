@@ -55,7 +55,7 @@ public class Main {
 		g.bfs("4");
 
 		System.out.println("Dijsktra");
-		Grafo g2 = new Grafo(8,false);
+		Grafo g2 = new Grafo(8,true);
 		g2.agregarVertice("A");
 		g2.agregarVertice("B");
 		g2.agregarVertice("C");
@@ -66,15 +66,15 @@ public class Main {
 		g2.agregarVertice("H");
 
 		g2.agregarArista("A","C",2);
-		g2.agregarArista("A","B",2);
+		g2.agregarArista("A","D",2);
 		g2.agregarArista("B","E",4);
-		g2.agregarArista("B","H",1);
+		g2.agregarArista("H","B",1);
 		g2.agregarArista("C","F",4);
 		g2.agregarArista("D","F",9);
 		g2.agregarArista("D","H",8);
-		g2.agregarArista("E","G",2);
+		g2.agregarArista("G","E",2);
 		g2.agregarArista("F","G",3);
-		g2.agregarArista("G","H",7);
+		//g2.agregarArista("G","H",7);
 
 		System.out.println(g2.dijkstra("D","E"));
 

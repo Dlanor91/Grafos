@@ -214,17 +214,20 @@ public class Grafo {
             //Obtener el vertice no visitado de menor costo(si hay varios cualquiera)
             int pos= obtenerSiguienteVerticeNoVisitadoDeMenorDistancia(costos,visitados);
             //2 Visitarlo
-            visitados[pos] = true;
-            //3 Evaluar sitengo que actualizar el costo de los adyacentes NO VISITADOS
-            for(int j =0; j<tope;j++){
-                if(matAdyacentes[pos][j].isExiste() && !visitados[j]){
-                    int distanciaNueva = costos[pos] + matAdyacentes[pos][j].getPeso();
-                    if(distanciaNueva < costos[j]) {
-                        costos[j] = distanciaNueva;
-                        anterior[j] = vertices[pos];
+            if(pos != -1){
+                visitados[pos] = true;
+                //3 Evaluar sitengo que actualizar el costo de los adyacentes NO VISITADOS
+                for(int j =0; j<tope;j++){
+                    if(matAdyacentes[pos][j].isExiste() && !visitados[j]){
+                        int distanciaNueva = costos[pos] + matAdyacentes[pos][j].getPeso();
+                        if(distanciaNueva < costos[j]) {
+                            costos[j] = distanciaNueva;
+                            anterior[j] = vertices[pos];
+                        }
                     }
                 }
             }
+
         }
 
         return costos[posDestino];
