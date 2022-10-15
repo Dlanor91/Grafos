@@ -197,9 +197,9 @@ public class Grafo {
         }
     }
 
-    public int dijkstra(String VOrigen, String VDestino){
-        int posOrigen = obtenerPos(VOrigen);
-        int posDestino = obtenerPos(VDestino);
+    public int dijkstra(String vOrigen, String vDestino){
+        int posOrigen = obtenerPos(vOrigen);
+        int posDestino = obtenerPos(vDestino);
 
         boolean[] visitados = new boolean[this.tope];
         int[] costos = new int[this.tope];
@@ -208,8 +208,9 @@ public class Grafo {
             costos[i] = Integer.MAX_VALUE;
             anterior[i] = "-";
         }
+        costos[posOrigen] = 0; // Marcar el origen con distancia cero
 
-        for(int i = 0; i<tope; i++){
+        for(int i = 0; i<tope; i++){ //Loop (cantidad de vertices)
             //Obtener el vertice no visitado de menor costo(si hay varios cualquiera)
             int pos= obtenerSiguienteVerticeNoVisitadoDeMenorDistancia(costos,visitados);
             //2 Visitarlo
@@ -218,14 +219,15 @@ public class Grafo {
             for(int j =0; j<tope;j++){
                 if(matAdyacentes[pos][j].isExiste() && !visitados[j]){
                     int distanciaNueva = costos[pos] + matAdyacentes[pos][j].getPeso();
-                    if(distanciaNueva < costos[j])
-                    costos[j] = distanciaNueva;
-                    anterior[j] = vertices[pos];
+                    if(distanciaNueva < costos[j]) {
+                        costos[j] = distanciaNueva;
+                        anterior[j] = vertices[pos];
+                    }
                 }
             }
         }
 
-        return 0;
+        return costos[posDestino];
     }
 
     private int obtenerSiguienteVerticeNoVisitadoDeMenorDistancia(int [] costos, boolean[] visitados){
